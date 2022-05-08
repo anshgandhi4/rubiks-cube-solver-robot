@@ -19,3 +19,6 @@ Here's a high level description of what happens:
    1) The default algorithm is a modified version of the Old Pochmann algorithm (typically used for blindfolded solves). I wrote this by scratch (hence all the python files with `op` in their name). I also modified it so that only five sides are used for turning, because that's how our robot is designed.
    2) The other algorithm is the Kociemba algorithm. This is imported through the `kociemba` Python library. While it is slightly more computationally heavy than the Old Pochmann, it is orders of magnitude more efficient in terms of move count. While it may take ~400 moves to solve the cube using Old Pochmann, Kociemba can do it in around 20.
 4) The cube solution is printed in [standard cubing notation](https://www.youtube.com/embed/24eHm4ri8WM?start=0&end=51).
+
+Here's a description of the lower level logic:
+1) The `arduino` folder contains all of the Arduino code that directly controls the motors. The program takes cube notation as input and moves the motors as output.
