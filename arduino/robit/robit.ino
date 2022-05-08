@@ -89,5 +89,5 @@ void setup() {
 
 void loop() {
   execute_moves("R D R' D R D2 R'");
-  delay(2000);
+  delay(200);
 }
