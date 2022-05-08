@@ -23,6 +23,51 @@ BasicStepperDriver front(MOTOR_STEPS, F_DIR, F_STEP);
 BasicStepperDriver back(MOTOR_STEPS, B_DIR, B_STEP);
 BasicStepperDriver down(MOTOR_STEPS, D_DIR, D_STEP);
 
+void rotate(BasicStepperDriver face, double rotation) {
+  face.enable();
+  face.rotate(rotation);
+  face.disable();
+}
+
+void execute_simple(String str, int rotation) {
+  char face_letters [] = {'L', 'R', 'F', 'B', 'D'};
+  BasicStepperDriver face_drivers [] = {left, right, front, back , down};
+
+  for (int i = 0; i < 5; i++) {
+    if (str.charAt(0) == face_letters[i]) {
+      rotate(face_drivers[i], rotation * -90);
+      return;
+    }
+  }
+}
+
+void execute(String str) {
+  if (str.length() == 1) {
+    execute_simple(str, 1);
+  } else if (str.charAt(1) == '2') {
+    execute_simple(str, 2);
+  } else if (str.charAt(1) == '\'') {
+    execute_simple(str, -1);
+  }
+}
+
+void execute_moves(String str) {
+  int i = 0;
+  while (i < str.length()) {
+    if (str.charAt(i) == ' ') {
+      i++;
+      continue;
+    }
+    
+    String temp = "";
+    while (str.charAt(i) != ' ' && i != str.length()) {
+      temp += str.charAt(i);
+      i++;
+    }
+    execute(temp);
+  }
+}
+
 void setup() {
   pinMode(L_DIR, OUTPUT);
   pinMode(L_STEP, OUTPUT);
@@ -34,7 +79,7 @@ void setup() {
   pinMode(B_STEP, OUTPUT);
   pinMode(D_DIR, OUTPUT);
   pinMode(D_STEP, OUTPUT);
-
+  
   left.begin(RPM, MICROSTEPS);
   right.begin(RPM, MICROSTEPS);
   front.begin(RPM, MICROSTEPS);
@@ -42,18 +87,7 @@ void setup() {
   down.begin(RPM, MICROSTEPS);
 }
 
-void rotate(BasicStepperDriver face, double rotation) {
-  face.enable();
-  face.rotate(rotation);
-  face.disable();
-}
-
 void loop() {
-  for (int i = 0; i < 6; i++) {
-    rotate(front, 90);
-    rotate(right, 90);
-    rotate(front, -90);
-    rotate(right, -90);
-  }
-  delay(4000);
+  execute_moves("R D R' D R D2 R'");
+  delay(2000);
 }
