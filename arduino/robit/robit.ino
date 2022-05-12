@@ -2,8 +2,10 @@
 
 // Motor Constants
 const int MOTOR_STEPS = 200;
-const int RPM = 120;
-const int MOVE_DELAY_MS = 200;
+const int RPM = 180;
+const int MOVE_DELAY_MS = 50;
+const int D_RPM = 150;
+const int D_MOVE_DELAY_MS = 75;
 const int MICROSTEPS = 16;
 
 // Pins
@@ -24,6 +26,9 @@ const int D_DIR = 52;
 const int D_STEP = 53;
 const int BUTTON = 50;
 
+// Miscellaneous
+String solution = "";
+
 // Stepper Motors
 BasicStepperDriver left(MOTOR_STEPS, L_DIR, L_STEP, L_ENABLE);
 BasicStepperDriver right(MOTOR_STEPS, R_DIR, R_STEP, R_ENABLE);
@@ -33,14 +38,19 @@ BasicStepperDriver down(MOTOR_STEPS, D_DIR, D_STEP, D_ENABLE);
 
 /**
   Rotates specified stepper motor by specified number of quarter-turns
+  @param face_letter Letter representing face
   @param face Stepper motor
   @param rotation Number of quarter-turns
 */
-void rotate(BasicStepperDriver face, double rotation) {
+void rotate(char face_letter, BasicStepperDriver face, double rotation) {
   face.enable();
   face.rotate(rotation);
   face.disable();
-  delay(MOVE_DELAY_MS);
+  if (face_letter == 'D') {
+    delay(D_MOVE_DELAY_MS);
+  } else {
+    delay(MOVE_DELAY_MS);
+  }
 }
 
 /**
@@ -49,7 +59,7 @@ void rotate(BasicStepperDriver face, double rotation) {
   @param rotation Number of quarter-turns
 */
 void execute_simple(String str, int rotation) {
-  Serial.println("Executing: " + str);
+//  Serial.println("Executing: " + str);
 
   if (str.charAt(0) == 'U') {
     execute_moves("R L F2 B2 R' L'");
@@ -63,7 +73,7 @@ void execute_simple(String str, int rotation) {
 
   for (int i = 0; i < 5; i++) {
     if (str.charAt(0) == face_letters[i]) {
-      rotate(face_drivers[i], rotation * -90);
+      rotate(str.charAt(0), face_drivers[i], rotation * -90);
       return;
     }
   }
@@ -74,7 +84,7 @@ void execute_simple(String str, int rotation) {
   @param str Cube notation string
 */
 void execute(String str) {
-  Serial.println("Executing Move: " + str);
+//  Serial.println("Executing Move: " + str);
 
   if (str.length() == 1) {
     execute_simple(str, 1);
@@ -90,7 +100,7 @@ void execute(String str) {
   @param str Cube notation string
 */
 void execute_moves(String str) {
-  Serial.println("Executing Moves: " + str);
+//  Serial.println("Executing Moves: " + str);
 
   int i = 0;
   while (i < str.length()) {
@@ -136,7 +146,7 @@ void setup() {
   right.begin(RPM, MICROSTEPS);
   front.begin(RPM, MICROSTEPS);
   back.begin(RPM, MICROSTEPS);
-  down.begin(RPM, MICROSTEPS);
+  down.begin(D_RPM, MICROSTEPS);
   left.setEnableActiveState(LOW);
   right.setEnableActiveState(LOW);
   front.setEnableActiveState(LOW);
@@ -150,21 +160,17 @@ void setup() {
 }
 
 void loop() {
-//  while (Serial.available() > 0) {
-//    char character = Serial.read();
-//
-//    if (character == '\n') {
-//      Serial.println("Solution Received: " + solution);
-//      execute_moves(solution);
-//      solution = "";
-//    } else {
-//      solution += character;
-//    }
-//  }
+  while (Serial.available() > 0) {
+    char character = Serial.read();
 
-  if (digitalRead(BUTTON) == HIGH) {
-    execute_moves("L L' R R' F F' B B' D D'");
+    if (character != '\n') {
+      solution += character;
+    } else {
+      Serial.println("Solution Received: " + solution);
+      long time = millis();
+      execute_moves(solution);
+      Serial.println("Solved In: " + String(millis() - time) + " ms");
+      solution = "";
+    }
   }
-
-  delay(10);
 }
