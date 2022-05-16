@@ -3,9 +3,9 @@
 // Motor Constants
 const int MOTOR_STEPS = 200;
 const int RPM = 180;
-const int MOVE_DELAY_MS = 50;
+const int MOVE_DELAY_MS = 100;
 const int D_RPM = 150;
-const int D_MOVE_DELAY_MS = 75;
+const int D_MOVE_DELAY_MS = 100;
 const int MICROSTEPS = 16;
 
 // Pins
@@ -37,20 +37,42 @@ BasicStepperDriver back(MOTOR_STEPS, B_DIR, B_STEP, B_ENABLE);
 BasicStepperDriver down(MOTOR_STEPS, D_DIR, D_STEP, D_ENABLE);
 
 /**
+  Disables all stepper motors
+*/
+void disable_all() {
+  left.disable();
+  right.disable();
+  front.disable();
+  back.disable();
+  down.disable();
+}
+
+/**
+  Enables all stepper motors
+*/
+void enable_all() {
+  left.enable();
+  right.enable();
+  front.enable();
+  back.enable();
+  down.enable();
+}
+
+/**
   Rotates specified stepper motor by specified number of quarter-turns
   @param face_letter Letter representing face
   @param face Stepper motor
   @param rotation Number of quarter-turns
 */
 void rotate(char face_letter, BasicStepperDriver face, double rotation) {
-  face.enable();
+//  face.enable();
   face.rotate(rotation);
-  face.disable();
   if (face_letter == 'D') {
     delay(D_MOVE_DELAY_MS);
   } else {
     delay(MOVE_DELAY_MS);
   }
+//  face.disable();
 }
 
 /**
@@ -152,11 +174,7 @@ void setup() {
   front.setEnableActiveState(LOW);
   back.setEnableActiveState(LOW);
   down.setEnableActiveState(LOW);
-  left.disable();
-  right.disable();
-  front.disable();
-  back.disable();
-  down.disable();
+  disable_all();
 }
 
 void loop() {
@@ -168,7 +186,9 @@ void loop() {
     } else {
       Serial.println("Solution Received: " + solution);
       long time = millis();
+      enable_all();
       execute_moves(solution);
+      disable_all();
       Serial.println("Solved In: " + String(millis() - time) + " ms");
       solution = "";
     }
