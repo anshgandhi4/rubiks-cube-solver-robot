@@ -2,10 +2,10 @@
 
 // Motor Constants
 const int MOTOR_STEPS = 200;
-const int RPM = 180;
-const int MOVE_DELAY_MS = 100;
-const int D_RPM = 150;
-const int D_MOVE_DELAY_MS = 100;
+const int RPM = 210;
+const int MOVE_DELAY_MS = 25;
+const int D_RPM = 180;
+const int D_MOVE_DELAY_MS = 50;
 const int MICROSTEPS = 16;
 
 // Pins
@@ -65,14 +65,14 @@ void enable_all() {
   @param rotation Number of quarter-turns
 */
 void rotate(char face_letter, BasicStepperDriver face, double rotation) {
-//  face.enable();
+  face.enable();
   face.rotate(rotation);
   if (face_letter == 'D') {
     delay(D_MOVE_DELAY_MS);
   } else {
     delay(MOVE_DELAY_MS);
   }
-//  face.disable();
+  face.disable();
 }
 
 /**
@@ -186,9 +186,7 @@ void loop() {
     } else {
       Serial.println("Solution Received: " + solution);
       long time = millis();
-      enable_all();
       execute_moves(solution);
-      disable_all();
       Serial.println("Solved In: " + String(millis() - time) + " ms");
       solution = "";
     }

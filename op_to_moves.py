@@ -89,3 +89,5 @@ def gen_edge_moves(positions):
 def generate_solution(corner_positions, edge_positions):
     solution = gen_corner_moves(corner_positions) + '\n\n' + gen_parity(corner_positions, edge_positions) + '\n\n' + gen_edge_moves(edge_positions)
     return solution if solution != '' else 'Already Solved!'
+
+print(reverse("U B2 R U2 R F2 D2 B2 R2 B2 R' F2 L' B' D' B R' B2 F L F'"))
