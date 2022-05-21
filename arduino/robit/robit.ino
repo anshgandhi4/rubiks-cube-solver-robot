@@ -1,15 +1,13 @@
 // Includes
 #include "BasicStepperDriver.h"
-//#include "MultiDriver.h"
-//#include "SyncDriver.h"
 
 // Motor Constants
 const int MOTOR_STEPS = 200;
 const int MICROSTEPS = 16;
-const int RPM = 210;
-const int MOVE_DELAY_MS = 5;
-const int D_RPM = 180;
-const int D_MOVE_DELAY_MS = 10;
+const int RPM = 190;
+const int MOVE_DELAY_MS = 20;
+const int D_RPM = 160;
+const int D_MOVE_DELAY_MS = 25;
 
 // Pins
 const int L_ENABLE = 23;
@@ -37,10 +35,6 @@ BasicStepperDriver right(MOTOR_STEPS, R_DIR, R_STEP, R_ENABLE);
 BasicStepperDriver front(MOTOR_STEPS, F_DIR, F_STEP, F_ENABLE);
 BasicStepperDriver back(MOTOR_STEPS, B_DIR, B_STEP, B_ENABLE);
 BasicStepperDriver down(MOTOR_STEPS, D_DIR, D_STEP, D_ENABLE);
-
-// Parallel Drivers
-//SyncDriver leftRight(left, right);
-//SyncDriver frontBack(front, back);
 
 /**
   Disables all stepper motors
