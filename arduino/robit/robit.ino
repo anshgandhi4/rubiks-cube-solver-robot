@@ -25,6 +25,7 @@ const int B_STEP = 47;
 const int D_ENABLE = 51;
 const int D_DIR = 52;
 const int D_STEP = 53;
+const int LED = 50;
 
 // Miscellaneous
 String solution = "";
@@ -155,6 +156,7 @@ void setup() {
   pinMode(D_DIR, OUTPUT);
   pinMode(D_STEP, OUTPUT);
   pinMode(D_ENABLE, OUTPUT);
+  pinMode(LED, OUTPUT);
 
   // Initialize Stepper Motors
   left.begin(RPM, MICROSTEPS);
@@ -182,7 +184,10 @@ void loop() {
       long time = millis();
       execute_moves(solution);
       Serial.println("Solved In: " + String(millis() - time) + " ms");
+      digitalWrite(LED, HIGH);
       solution = "";
+      delay(1000);
+      digitalWrite(LED, LOW);
     }
   }
 }

@@ -1,6 +1,8 @@
 import re
 
 def simplify(string):
+    string = ' '.join([sub for sub in string.split(' ') if '(' not in sub])
+    string = string.replace('3', "'").replace('1', '')
     string = re.sub('\s{2,}', ' ', (string + ' ').replace("''", '').replace("2'", '2').replace('(', '').replace(')', '').replace('\n', ' '))
 
     prev_string = ''
