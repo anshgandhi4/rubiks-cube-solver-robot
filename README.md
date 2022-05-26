@@ -1,8 +1,9 @@
 # Rubik's Cube Solver Robot
+![](coob_robit.jpg)
 
 ## Background
 My friends and I decided to make a Rubik's cube mosaic for our AP Physics C semester final project. To create this mosaic, we realized it would be fun to make a Rubik's cube solver robot, feed it a bunch of cubes, and have it solve them to make a mosaic. We hope this repository documents, at least the software portion, of our project's progress.
-
+For more information about our development process and how robot works, please watch the [YouTube video we created](https://youtu.be/KUTON_LL8Ps).
 
 ## Acknowledgements
 Huge thanks to Ansh Gandhi, Mukunth Nagarajan, Jonathan Ma, and Athul Krishnan for working on this project. Also many thanks to Mrs. Kumar for assigning this project and giving us the opportunity to explore our common interest in robotics for a school assignment.
@@ -20,5 +21,6 @@ Here's a high level description of what happens:
    2) The other algorithm is the Kociemba algorithm. This is imported through the `kociemba` Python library. While it's computationally heavier than Old Pochmann, it's orders of magnitude more efficient in terms of move count. While Old Pochmann may generate a ~400 move solution, Kociemba can do it in around 20.
 4) The cube solution is printed in [standard cubing notation](https://www.youtube.com/embed/24eHm4ri8WM?start=0&end=51).
 
-Here's a description of the lower level logic:
-1) The `arduino` folder contains all of the Arduino code that directly controls the motors. The program takes cube notation as input and moves the motors as output.
+[//]: # (Here's a description of the lower level logic:)
+
+[//]: # (1&#41; The `arduino` folder contains all of the Arduino code that directly controls the motors. The program takes cube notation as input and moves the motors as output.)
