@@ -1,8 +1,8 @@
 # ####### The cube on the facelet level is described by positions of the colored stickers. #############################
 
-from defs import cornerFacelet, edgeFacelet, cornerColor, edgeColor
-from enums import Color, Corner, Edge
-from cubie import CubieCube
+from kociemba_five_face.defs import cornerFacelet, edgeFacelet, cornerColor, edgeColor
+from kociemba_five_face.enums import Color, Corner, Edge
+from kociemba_five_face.cubie import CubieCube
 
 
 class FaceCube:

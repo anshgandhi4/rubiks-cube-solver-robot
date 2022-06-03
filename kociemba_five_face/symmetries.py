@@ -3,10 +3,11 @@
 from os import path
 import numpy as np
 import array as ar
-import cubie as cb
-from defs import N_TWIST, N_SYM, N_SYM_C2v, N_FLIP, N_SLICE, N_CORNERS, N_UD_EDGES, N_MOVE, N_FLIPSLICE_CLASS_2cv, \
+
+from kociemba_five_face import cubie as cb
+from kociemba_five_face.defs import N_TWIST, N_SYM, N_SYM_C2v, N_FLIP, N_SLICE, N_CORNERS, N_UD_EDGES, N_MOVE, N_FLIPSLICE_CLASS_2cv, \
     N_CORNERS_CLASS_2cv
-from enums import Corner as Co, Edge as Ed, Move as Mv, BS
+from kociemba_five_face.enums import Corner as Co, Edge as Ed, Move as Mv, BS
 
 INVALID_H = 65535  # 2^16 - 1
 INVALID_L = 4294967295  # 2^32 - 1
@@ -99,7 +100,7 @@ for s in range(N_SYM):
 ########################################################################################################################
 
 # generate the phase 1 table for conjugation of the twist t by a symmetry s. twist_conj[N_SYM_C2v * t + s] = s*t*s^-1###
-fname = "conj_twist"
+fname = "kociemba_five_face/conj_twist"
 if not path.isfile(fname):
     print('On the first run, several tables will be created. This takes from 2 hours (e.g. PC) to 24 hours '
           '(e.g. RaspberryPi3), depending on the hardware.')
@@ -125,7 +126,7 @@ fh.close()
 # ######################################################################################################################
 
 # #################### generate the phase 2 table for the conjugation of the URtoDB coordinate by a symmetrie###########
-fname = "conj_ud_edges"
+fname = "kociemba_five_face/conj_ud_edges"
 if not path.isfile(fname):
     print("creating " + fname + " table...")
     ud_edges_conj = ar.array('H', [0] * (N_UD_EDGES * N_SYM_C2v))
@@ -153,9 +154,9 @@ fh.close()
 # ######################################################################################################################
 
 # ############## generate the tables to handle the symmetry reduced flip-slice coordinate in  phase 1 ##################
-fname1 = "fs_classidx"
-fname2 = "fs_sym"
-fname3 = "fs_rep"
+fname1 = "kociemba_five_face/fs_classidx"
+fname2 = "kociemba_five_face/fs_sym"
+fname3 = "kociemba_five_face/fs_rep"
 if not (path.isfile(fname1) and path.isfile(fname2) and path.isfile(fname3)):
     print("creating " + "flipslice sym-tables...")
     flipslice_classidx = ar.array('L', [INVALID_L] * (N_FLIP * N_SLICE))  # idx -> classidx
@@ -219,9 +220,9 @@ else:
 ########################################################################################################################
 
 # ############ generate the tables to handle the symmetry reduced corner permutation coordinate in phase 2##############
-fname1 = "co_classidx"
-fname2 = "co_sym"
-fname3 = "co_rep"
+fname1 = "kociemba_five_face/co_classidx"
+fname2 = "kociemba_five_face/co_sym"
+fname3 = "kociemba_five_face/co_rep"
 if not (path.isfile(fname1) and path.isfile(fname2) and path.isfile(fname3)):
     print("creating " + "corner sym-tables...")
     corner_classidx = ar.array('H', [INVALID_H] * N_CORNERS)  # idx -> classidx

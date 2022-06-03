@@ -1,14 +1,15 @@
 # ##################### The pruning tables cut the search tree during the search. ######################################
 # ##################### The pruning values are stored modulo 3 which saves a lot of memory. ############################
 
-import defs
-import enums
-import moves as mv
-import symmetries as sy
-import cubie as cb
 from os import path
 import time
 import array as ar
+
+from kociemba_five_face import defs
+from kociemba_five_face import enums
+from kociemba_five_face import moves as mv
+from kociemba_five_face import symmetries as sy
+from kociemba_five_face import cubie as cb
 
 flipslice_twist_depth3 = None  # global variables
 corners_ud_edges_depth3 = None
@@ -52,7 +53,7 @@ def create_phase1_prun_table():
     """Creates/loads the flipslice_twist_depth3 pruning table for phase 1."""
     global flipslice_twist_depth3
     total = defs.N_FLIPSLICE_CLASS_2cv * defs.N_TWIST
-    fname = "phase1_prun"
+    fname = "kociemba_five_face/phase1_prun"
     if not path.isfile(fname):
         print("creating " + fname + " table...")
         print('This may take half an hour or even longer, depending on the hardware.')
@@ -177,7 +178,7 @@ def create_phase1_prun_table():
 def create_phase2_prun_table():
     """Creates/loads the corners_ud_edges_depth3 pruning table for phase 2."""
     total = defs.N_CORNERS_CLASS_2cv * defs.N_UD_EDGES
-    fname = "phase2_prun"
+    fname = "kociemba_five_face/phase2_prun"
     global corners_ud_edges_depth3
     if not path.isfile(fname):
         print("creating " + fname + " table...")
@@ -279,7 +280,7 @@ def create_phase2_prun_table():
 def create_phase2_cornsliceprun_table():
     """Creates/loads the cornslice_depth pruning table for phase 2. With this table we do a fast precheck
     at the beginning of phase 2."""
-    fname = "phase2_cornsliceprun"
+    fname = "kociemba_five_face/phase2_cornsliceprun"
     global cornslice_depth
     if not path.isfile(fname):
         print("creating " + fname + " table...")

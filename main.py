@@ -1,4 +1,4 @@
-import solver as sv
+from kociemba_five_face import solver as sv
 from util import simplify
 from vision import scan_cube
 

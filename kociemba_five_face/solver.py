@@ -1,13 +1,15 @@
 # ################### The SolverThread class solves implements the two phase algorithm #################################
-import face
+
 import threading as thr
-import cubie
-import symmetries as sy
-import coord
-import enums as en
-import moves as mv
-import pruning as pr
 import time
+
+from kociemba_five_face import face
+from kociemba_five_face import cubie
+from kociemba_five_face import symmetries as sy
+from kociemba_five_face import coord
+from kociemba_five_face import enums as en
+from kociemba_five_face import moves as mv
+from kociemba_five_face import pruning as pr
 
 
 class SolverThread(thr.Thread):
