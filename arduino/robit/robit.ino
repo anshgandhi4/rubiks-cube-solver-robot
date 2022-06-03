@@ -4,10 +4,10 @@
 // Motor Constants
 const int MOTOR_STEPS = 200;
 const int MICROSTEPS = 16;
-const int RPM = 190;
-const int MOVE_DELAY_MS = 20;
-const int D_RPM = 160;
-const int D_MOVE_DELAY_MS = 25;
+const int RPM = 180;
+const int MOVE_DELAY_MS = 50;
+const int D_RPM = 150;
+const int D_MOVE_DELAY_MS = 75;
 
 // Pins
 const int L_ENABLE = 23;
